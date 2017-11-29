@@ -1,5 +1,7 @@
 package co.uk.app.commerce.catalog.category.document;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -34,6 +36,16 @@ public class Category {
 	private String parentcategoryidentifier;
 
 	private List<Association> association;
+
+	private String lastupdate = new SimpleDateFormat("dd-MM-yy HH:mm:SS").format(new Date());
+
+	public String getLastupdate() {
+		return lastupdate;
+	}
+
+	public void setLastupdate(String lastupdate) {
+		this.lastupdate = lastupdate;
+	}
 
 	public String getId() {
 		return id;

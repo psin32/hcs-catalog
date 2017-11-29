@@ -21,12 +21,22 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Category persistCategory(Category category) {
-		return categoryRepository.save(category);
+		return categoryRepository.insert(category);
 	}
 
 	@Override
 	public Category findCategoryByIdentifier(String identifier) {
-		return null;
+		return categoryRepository.findByIdentifier(identifier);
+	}
+
+	@Override
+	public Category updateCategory(Category category) {
+		return categoryRepository.save(category);
+	}
+
+	@Override
+	public void deleteCategoryById(String id) {
+		categoryRepository.delete(id);
 	}
 
 }

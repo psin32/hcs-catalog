@@ -6,4 +6,5 @@ import co.uk.app.commerce.catalog.category.document.Category;
 
 public interface CategoryRepository extends MongoRepository<Category, String> {
 
+	Category findByIdentifier(String identifier);
 }

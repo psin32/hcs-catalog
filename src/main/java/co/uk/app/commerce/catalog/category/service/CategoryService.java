@@ -10,5 +10,9 @@ public interface CategoryService {
 	
 	Category persistCategory(Category category);
 	
+	Category updateCategory(Category category);
+	
 	Category findCategoryByIdentifier(String identifier);
+	
+	void deleteCategoryById(String id);
 }
