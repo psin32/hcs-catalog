@@ -29,10 +29,16 @@ public class CategoryController {
 		return categoryService.findAllCategories();
 	}
 
+	@GetMapping(path = "/topnav")
+	public @ResponseBody Iterable<Category> getTopNav() {
+		return categoryService.findTopNav();
+	}
+
 	@PostMapping(path = "/add")
 	public ResponseEntity<?> persistCategory(@RequestBody Category category, HttpServletResponse response) {
 		Category cat = categoryService.findCategoryByIdentifier(category.getIdentifier());
 		if (null == cat) {
+			category.setUrl(category.getIdentifier().replaceAll(" ", "-").toLowerCase());
 			return ResponseEntity.ok(categoryService.persistCategory(category));
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -45,6 +51,9 @@ public class CategoryController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		category.setId(cat.getId());
+		if (null != category.getIdentifier()) {
+			category.setUrl(category.getIdentifier().replaceAll(" ", "-").toLowerCase());
+		}
 		return ResponseEntity.ok(categoryService.updateCategory(category));
 	}
 
@@ -53,9 +62,24 @@ public class CategoryController {
 		return categoryService.findCategoryByIdentifier(identifier);
 	}
 
+	@GetMapping(path = "/subcategories/{identifier}")
+	public @ResponseBody Iterable<Category> getSubCategoriesByParentIdentifier(
+			@PathVariable("identifier") String identifier) {
+		return categoryService.findSubCategoriesByParentIdentifier(identifier);
+	}
+
 	@DeleteMapping(path = "/delete/{id}")
 	public ResponseEntity<?> deleteCategory(@PathVariable("id") String id) {
 		categoryService.deleteCategoryById(id);
 		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
+	@GetMapping(path = "/url/{url}")
+	public ResponseEntity<?> getCategoryByURL(@PathVariable("url") String url) {
+		Category category = categoryService.findCategoryByURL(url);
+		if(null == category) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		return ResponseEntity.ok(category);
 	}
 }

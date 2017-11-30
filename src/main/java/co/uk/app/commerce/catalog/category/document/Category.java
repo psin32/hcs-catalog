@@ -7,9 +7,9 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import co.uk.app.commerce.catalog.category.bean.Association;
-import co.uk.app.commerce.catalog.category.bean.Description;
-import co.uk.app.commerce.catalog.category.bean.Image;
+import co.uk.app.commerce.catalog.common.bean.Association;
+import co.uk.app.commerce.catalog.common.bean.Description;
+import co.uk.app.commerce.catalog.common.bean.Image;
 
 @Document(collection = "category")
 public class Category {
@@ -33,9 +33,9 @@ public class Category {
 
 	private boolean topnav;
 
-	private String parentcategoryidentifier;
+	private List<Association> parentcategories;
 
-	private List<Association> association;
+	private String url;
 
 	private String lastupdate = new SimpleDateFormat("dd-MM-yy HH:mm:SS").format(new Date());
 
@@ -119,20 +119,20 @@ public class Category {
 		this.topnav = topnav;
 	}
 
-	public String getParentcategoryidentifier() {
-		return parentcategoryidentifier;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setParentcategoryidentifier(String parentcategoryidentifier) {
-		this.parentcategoryidentifier = parentcategoryidentifier;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	public List<Association> getAssociation() {
-		return association;
+	public List<Association> getParentcategories() {
+		return parentcategories;
 	}
 
-	public void setAssociation(List<Association> association) {
-		this.association = association;
+	public void setParentcategories(List<Association> parentcategories) {
+		this.parentcategories = parentcategories;
 	}
 
 }

@@ -8,11 +8,17 @@ public interface CategoryService {
 
 	Collection<Category> findAllCategories();
 	
+	Collection<Category> findTopNav();
+
+	Collection<Category> findSubCategoriesByParentIdentifier(String id);
+
 	Category persistCategory(Category category);
-	
+
 	Category updateCategory(Category category);
-	
+
 	Category findCategoryByIdentifier(String identifier);
-	
+
+	Category findCategoryByURL(String url);
+
 	void deleteCategoryById(String id);
 }

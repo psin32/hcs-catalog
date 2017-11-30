@@ -1,4 +1,4 @@
-package co.uk.app.commerce.catalog.category.bean;
+package co.uk.app.commerce.catalog.common.bean;
 
 public class Image {
 
