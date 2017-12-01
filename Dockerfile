@@ -21,6 +21,7 @@ ENV PATH                   $PATH:$MAVEN_HOME/bin
 
 # Prepare app directory
 RUN mkdir -p /usr/src/app
+RUN mkdir -p /usr/src/app/log
 ADD . /usr/src/app
 
 # Install dependencies
@@ -28,8 +29,9 @@ WORKDIR /usr/src/app
 
 RUN mvn clean install
 
-
 # Tell Docker about the port we'll run on.
 EXPOSE 8090
 
-CMD ["/bin/sh", "-c", "java $JAVA_OPTS -jar /usr/src/app/target/app/hcs-catalog-0.0.1-SNAPSHOT.jar]
+# CMD java $JAVA_OPTS -jar /usr/src/app/target/hcs-catalog-0.0.1-SNAPSHOT.jar > /usr/src/app/log/logger.log
+
+ENTRYPOINT ["java", "-jar", "/usr/src/app/target/hcs-catalog-0.0.1-SNAPSHOT.jar", "--server.port=8080"]
