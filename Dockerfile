@@ -34,4 +34,4 @@ EXPOSE 8090
 
 # CMD java $JAVA_OPTS -jar /usr/src/app/target/hcs-catalog-0.0.1-SNAPSHOT.jar > /usr/src/app/log/logger.log
 
-ENTRYPOINT ["java", "-jar", "/usr/src/app/target/hcs-catalog-0.0.1-SNAPSHOT.jar", "--server.port=8080"]
+ENTRYPOINT ["java", "-jar", "/usr/src/app/target/hcs-catalog-0.0.1-SNAPSHOT.jar", "--server.port=8090"]
