@@ -30,7 +30,7 @@ RUN mvn clean install
 
 WORKDIR /usr/src/app/target
 
-RUN java -jar hcs-catalog-0.0.1-SNAPSHOT.jar
+CMD nohup java -jar hcs-catalog-0.0.1-SNAPSHOT.jar /tmp 2>> /dev/null >> /dev/null &
 
 # Tell Docker about the port we'll run on.
 EXPOSE 8090
