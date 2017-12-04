@@ -18,7 +18,7 @@ public class CatalogWebConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests()
-				.antMatchers(HttpMethod.GET, securityConfiguration.getJwtCategoryUrlGetMethod()).permitAll()
+				.antMatchers(HttpMethod.GET).permitAll()
 				.antMatchers(HttpMethod.GET, securityConfiguration.getJwtCatentryUrlGetMethod()).permitAll()
 //				.antMatchers("/catentry/**").permitAll()
 //				.antMatchers("/category/**").permitAll()

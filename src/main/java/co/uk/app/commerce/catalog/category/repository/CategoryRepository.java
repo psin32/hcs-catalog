@@ -15,6 +15,8 @@ public interface CategoryRepository extends MongoRepository<Category, String> {
 	Collection<Category> findByTopnavIsTrue();
 
 	Category findByUrl(String url);
+	
+	Category findById(String id);
 
 	@Query(value = "{parentcategories.identifier:?0}")
 	List<Category> findAllSubcategories(String identifier);

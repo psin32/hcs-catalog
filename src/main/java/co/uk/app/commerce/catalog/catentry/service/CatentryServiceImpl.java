@@ -44,4 +44,9 @@ public class CatentryServiceImpl implements CatentryService {
 		return catentryRepository.findByPartnumber(partnumber);
 	}
 
+	@Override
+	public Collection<Catentry> findCatentriesByCategoryUrl(String url) {
+		return catentryRepository.findByCategoryUrl(url);
+	}
+
 }

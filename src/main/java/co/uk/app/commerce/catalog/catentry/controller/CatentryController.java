@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +17,13 @@ import co.uk.app.commerce.catalog.catentry.document.Catentry;
 import co.uk.app.commerce.catalog.catentry.service.CatentryService;
 
 @RestController
-@RequestMapping("/catentry")
+@RequestMapping("/api/catentry")
 public class CatentryController {
 
 	@Autowired
 	private CatentryService catentryService;
 
-	@PostMapping(path = "/add")
+	@PutMapping
 	public ResponseEntity<?> persistCatentry(@RequestBody Catentry catentry, HttpServletResponse response) {
 		Catentry cat = catentryService.findCatentryByPartnumber(catentry.getPartnumber());
 		if (null == cat) {
@@ -32,7 +33,7 @@ public class CatentryController {
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
 	}
 
-	@PostMapping(path = "/update")
+	@PatchMapping
 	public ResponseEntity<?> updateCatentry(@RequestBody Catentry catentry, HttpServletResponse response) {
 		Catentry cat = catentryService.findCatentryByPartnumber(catentry.getPartnumber());
 		if (null == cat) {
@@ -45,19 +46,13 @@ public class CatentryController {
 		return ResponseEntity.ok(catentryService.updateCatentry(catentry));
 	}
 
-	@GetMapping(path = "/url/{url}")
+	@GetMapping(path = "/{url}")
 	public ResponseEntity<?> getCatentryByURL(@PathVariable("url") String url) {
 		Catentry catentry = catentryService.findCatentryByURL(url);
 		if (null == catentry) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		return ResponseEntity.ok(catentry);
-	}
-
-	@GetMapping(path = "/{categoryidentifier}")
-	public ResponseEntity<?> getCatentryByCategoryIdentifier(
-			@PathVariable("categoryidentifier") String categoryidentifier) {
-		return ResponseEntity.ok(catentryService.findCatentriesByCategoryIdentifier(categoryidentifier));
 	}
 
 }

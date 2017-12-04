@@ -10,9 +10,12 @@ import co.uk.app.commerce.catalog.catentry.document.Catentry;
 public interface CatentryRepository extends MongoRepository<Catentry, String> {
 
 	Catentry findByUrl(String url);
-	
+
 	@Query(value = "{categories.identifier:?0}")
 	Collection<Catentry> findByCategoryIdentifier(String identifier);
-	
+
+	@Query(value = "{categories.url:?0}")
+	Collection<Catentry> findByCategoryUrl(String url);
+
 	Catentry findByPartnumber(String partnumber);
 }

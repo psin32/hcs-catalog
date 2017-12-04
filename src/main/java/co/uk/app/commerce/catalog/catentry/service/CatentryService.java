@@ -8,6 +8,8 @@ public interface CatentryService {
 	
 	Collection<Catentry> findCatentriesByCategoryIdentifier(String identifier);
 	
+	Collection<Catentry> findCatentriesByCategoryUrl(String url);
+	
 	Catentry findCatentryByURL(String url);
 	
 	Catentry findCatentryByPartnumber(String partnumber);

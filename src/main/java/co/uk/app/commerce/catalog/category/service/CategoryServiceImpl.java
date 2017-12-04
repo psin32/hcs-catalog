@@ -55,4 +55,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepository.findByTopnavIsTrue();
 	}
 
+	@Override
+	public Category findCategoryById(String id) {
+		return categoryRepository.findById(id);
+	}
+
 }

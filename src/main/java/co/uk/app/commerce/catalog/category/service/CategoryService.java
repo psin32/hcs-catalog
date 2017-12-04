@@ -21,4 +21,6 @@ public interface CategoryService {
 	Category findCategoryByURL(String url);
 
 	void deleteCategoryById(String id);
+	
+	Category findCategoryById(String id);
 }

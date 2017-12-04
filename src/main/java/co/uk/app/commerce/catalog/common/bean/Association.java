@@ -5,8 +5,18 @@ public class Association {
 	private String id;
 
 	private String identifier;
+	
+	private String url;
 
 	private String type;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public String getId() {
 		return id;
