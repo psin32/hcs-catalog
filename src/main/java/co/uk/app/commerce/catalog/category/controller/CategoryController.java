@@ -42,7 +42,7 @@ public class CategoryController {
 	public ResponseEntity<?> persistCategory(@RequestBody Category category, HttpServletResponse response) {
 		Category cat = categoryService.findCategoryByIdentifier(category.getIdentifier());
 		if (null == cat) {
-			category.setUrl(category.getIdentifier().replaceAll(" ", "-").toLowerCase());
+			category.setUrl(category.getDescription().getName().replaceAll(" ", "-").toLowerCase());
 			return ResponseEntity.ok(categoryService.persistCategory(category));
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -55,8 +55,8 @@ public class CategoryController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		category.setId(cat.getId());
-		if (null != category.getIdentifier()) {
-			category.setUrl(category.getIdentifier().replaceAll(" ", "-").toLowerCase());
+		if (null != category.getDescription() && null != category.getDescription().getName()) {
+			category.setUrl(category.getDescription().getName().replaceAll(" ", "-").toLowerCase());
 		}
 		return ResponseEntity.ok(categoryService.updateCategory(category));
 	}

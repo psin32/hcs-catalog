@@ -27,7 +27,12 @@ public class CatentryController {
 	public ResponseEntity<?> persistCatentry(@RequestBody Catentry catentry, HttpServletResponse response) {
 		Catentry cat = catentryService.findCatentryByPartnumber(catentry.getPartnumber());
 		if (null == cat) {
-			catentry.setUrl(catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase());
+			String url = catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase();
+			Catentry byUrlCategory = catentryService.findCatentryByURL(url);
+			if (null != byUrlCategory && !catentry.getPartnumber().equalsIgnoreCase(byUrlCategory.getPartnumber())) {
+				url = url + "-" + catentry.getPartnumber().toLowerCase();
+			}
+			catentry.setUrl(url);
 			return ResponseEntity.ok(catentryService.persistCatentry(catentry));
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -41,7 +46,12 @@ public class CatentryController {
 		}
 		catentry.setId(cat.getId());
 		if (null != catentry.getPartnumber()) {
-			catentry.setUrl(catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase());
+			String url = catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase();
+			Catentry byUrlCategory = catentryService.findCatentryByURL(url);
+			if (null != byUrlCategory && !catentry.getPartnumber().equalsIgnoreCase(byUrlCategory.getPartnumber())) {
+				url = url + "-" + catentry.getPartnumber().toLowerCase();
+			}
+			catentry.setUrl(url);
 		}
 		return ResponseEntity.ok(catentryService.updateCatentry(catentry));
 	}

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import co.uk.app.commerce.catalog.common.bean.Association;
@@ -21,6 +22,7 @@ public class Catentry {
 	@Id
 	private String id;
 
+	@Indexed(unique = true)
 	private String partnumber;
 
 	private Description description;
@@ -28,7 +30,7 @@ public class Catentry {
 	private List<Image> thumbnail;
 
 	private List<Image> fullimage;
-	
+
 	private String mainimage;
 
 	private CatentryType type;

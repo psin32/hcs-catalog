@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import co.uk.app.commerce.catalog.common.bean.Association;
@@ -17,6 +18,7 @@ public class Category {
 	@Id
 	private String id;
 
+	@Indexed(unique = true)
 	private String identifier;
 
 	private Description description;
@@ -31,7 +33,7 @@ public class Category {
 
 	private Integer sequence;
 
-	private boolean topnav;
+	private Boolean topnav;
 
 	private List<Association> parentcategories;
 
@@ -111,11 +113,11 @@ public class Category {
 		this.sequence = sequence;
 	}
 
-	public boolean isTopnav() {
+	public Boolean isTopnav() {
 		return topnav;
 	}
 
-	public void setTopnav(boolean topnav) {
+	public void setTopnav(Boolean topnav) {
 		this.topnav = topnav;
 	}
 
@@ -133,6 +135,10 @@ public class Category {
 
 	public void setParentcategories(List<Association> parentcategories) {
 		this.parentcategories = parentcategories;
+	}
+
+	public Boolean getTopnav() {
+		return topnav;
 	}
 
 }

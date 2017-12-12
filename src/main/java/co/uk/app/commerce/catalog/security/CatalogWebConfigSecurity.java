@@ -20,8 +20,8 @@ public class CatalogWebConfigSecurity extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.GET).permitAll()
 				.antMatchers(HttpMethod.GET, securityConfiguration.getJwtCatentryUrlGetMethod()).permitAll()
-//				.antMatchers("/catentry/**").permitAll()
-//				.antMatchers("/category/**").permitAll()
+//				.antMatchers("/api/catentry/**").permitAll()
+//				.antMatchers("/api/category/**").permitAll()
 				.anyRequest().authenticated().and()
 				.addFilter(new CatalogJWTAuthorizationFilter(authenticationManager()))
 				// this disables session creation on Spring Security
