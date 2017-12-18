@@ -17,12 +17,12 @@ public class MongoTestConfig extends AbstractMongoConfiguration {
 
 	@Override
 	protected String getDatabaseName() {
-		return env.getRequiredProperty("spring.data.mongodb.database");
+		return env.getRequiredProperty("mongodb.database");
 	}
 
 	@Override
 	public Mongo mongo() throws Exception {
-		return new EmbeddedMongoBuilder().version("2.6.1").bindIp(env.getRequiredProperty("spring.data.mongodb.host"))
-				.port(Integer.valueOf(env.getRequiredProperty("spring.data.mongodb.port"))).build();
+		return new EmbeddedMongoBuilder().version("2.6.1").bindIp(env.getRequiredProperty("mongodb.host"))
+				.port(Integer.valueOf(env.getRequiredProperty("mongodb.port"))).build();
 	}
 }

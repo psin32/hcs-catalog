@@ -1,5 +1,8 @@
 package co.uk.app.commerce.unitetest.catalog.category.service;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,7 @@ public class CategoryServiceUnitTest extends AbstractCatalogUnitTest {
 
 	@Before
 	public void setup() {
-		importJSON("category", "src/test/resources/category.json");
+		importJSON("category", "src/test/resources/category.txt");
 	}
 
 	@Test
@@ -37,7 +40,16 @@ public class CategoryServiceUnitTest extends AbstractCatalogUnitTest {
 		Category savedCategory = categoryService.persistCategory(category);
 		System.out.println("=========================================");
 		System.out.println(savedCategory.getId());
-		System.out.println(categoryService.findAllCategories());
+		Collection<Category> catColl = categoryService.findAllCategories();
+		Iterator<Category> categories = catColl.iterator();
+		while (categories.hasNext()) {
+			Category allCategory = categories.next();
+			System.out.println(allCategory.getId());
+			System.out.println(allCategory.getIdentifier());
+			System.out.println(allCategory.getDescription().getName());
+			System.out.println(allCategory.getDescription().getShortdescription());
+			System.out.println(allCategory.getDescription().getLongdescription());
+		}
 		System.out.println("=========================================");
 	}
 }
