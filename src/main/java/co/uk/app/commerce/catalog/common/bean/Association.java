@@ -2,11 +2,21 @@ package co.uk.app.commerce.catalog.common.bean;
 
 public class Association {
 
+	private String name;
+
 	private String identifier;
-	
+
 	private String url;
 
 	private String type;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getUrl() {
 		return url;

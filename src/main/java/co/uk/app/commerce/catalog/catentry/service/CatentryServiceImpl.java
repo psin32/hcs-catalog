@@ -1,18 +1,26 @@
 package co.uk.app.commerce.catalog.catentry.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import co.uk.app.commerce.catalog.category.document.Category;
+import co.uk.app.commerce.catalog.category.service.CategoryService;
 import co.uk.app.commerce.catalog.catentry.document.Catentry;
 import co.uk.app.commerce.catalog.catentry.repository.CatentryRepository;
+import co.uk.app.commerce.catalog.common.bean.Association;
 
 @Component
 public class CatentryServiceImpl implements CatentryService {
 
 	@Autowired
 	private CatentryRepository catentryRepository;
+
+	@Autowired
+	private CategoryService categoryService;
 
 	@Override
 	public Collection<Catentry> findCatentriesByCategoryIdentifier(String identifier) {
@@ -31,12 +39,65 @@ public class CatentryServiceImpl implements CatentryService {
 
 	@Override
 	public Catentry updateCatentry(Catentry catentry) {
-		return catentryRepository.save(catentry);
+		Catentry updatedCatentry = null;
+		Catentry cat = findCatentryByPartnumber(catentry.getPartnumber());
+		if (null == cat) {
+			return null;
+		}
+		catentry.setId(cat.getId());
+		if (null != catentry.getPartnumber()) {
+			String url = catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase();
+			Catentry byUrlCategory = findCatentryByURL(url);
+			if (null != byUrlCategory && !catentry.getPartnumber().equalsIgnoreCase(byUrlCategory.getPartnumber())) {
+				url = url + "-" + catentry.getPartnumber().toLowerCase();
+			}
+			catentry.setUrl(url);
+
+			List<Association> categories = getAssociationList(catentry);
+			catentry.setCategories(categories);
+
+			updatedCatentry = catentryRepository.save(catentry);
+		}
+		return updatedCatentry;
+	}
+
+	private List<Association> getAssociationList(Catentry catentry) {
+		List<Association> categories = new ArrayList<>();
+
+		catentry.getCategories().stream().forEach(association -> {
+
+			String categoryIdentifier = association.getIdentifier();
+			Category category = categoryService.findCategoryByIdentifier(categoryIdentifier);
+
+			if (null != category) {
+				Association updatedAssociation = new Association();
+				updatedAssociation.setIdentifier(association.getIdentifier());
+				updatedAssociation.setName(category.getDescription().getName());
+				updatedAssociation.setUrl(category.getUrl());
+				updatedAssociation.setType(category.getClass().getName());
+				categories.add(updatedAssociation);
+			}
+		});
+		return categories;
 	}
 
 	@Override
 	public Catentry persistCatentry(Catentry catentry) {
-		return catentryRepository.insert(catentry);
+		Catentry savedCatentry = null;
+		Catentry cat = findCatentryByPartnumber(catentry.getPartnumber());
+		if (null == cat) {
+			String url = catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase();
+			Catentry byUrlCategory = findCatentryByURL(url);
+			if (null != byUrlCategory && !catentry.getPartnumber().equalsIgnoreCase(byUrlCategory.getPartnumber())) {
+				url = url + "-" + catentry.getPartnumber().toLowerCase();
+			}
+			catentry.setUrl(url);
+			List<Association> categories = getAssociationList(catentry);
+			catentry.setCategories(categories);
+
+			savedCatentry = catentryRepository.insert(catentry);
+		}
+		return savedCatentry;
 	}
 
 	@Override

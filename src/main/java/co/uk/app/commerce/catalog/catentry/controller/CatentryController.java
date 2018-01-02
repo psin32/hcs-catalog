@@ -25,35 +25,20 @@ public class CatentryController {
 
 	@PutMapping
 	public ResponseEntity<?> persistCatentry(@RequestBody Catentry catentry, HttpServletResponse response) {
-		Catentry cat = catentryService.findCatentryByPartnumber(catentry.getPartnumber());
-		if (null == cat) {
-			String url = catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase();
-			Catentry byUrlCategory = catentryService.findCatentryByURL(url);
-			if (null != byUrlCategory && !catentry.getPartnumber().equalsIgnoreCase(byUrlCategory.getPartnumber())) {
-				url = url + "-" + catentry.getPartnumber().toLowerCase();
-			}
-			catentry.setUrl(url);
-			return ResponseEntity.ok(catentryService.persistCatentry(catentry));
+		Catentry savedCatentry = catentryService.persistCatentry(catentry);
+		if (null == savedCatentry) {
+			return ResponseEntity.ok(savedCatentry);
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).build();
 	}
 
 	@PatchMapping
 	public ResponseEntity<?> updateCatentry(@RequestBody Catentry catentry, HttpServletResponse response) {
-		Catentry cat = catentryService.findCatentryByPartnumber(catentry.getPartnumber());
-		if (null == cat) {
+		Catentry updatedCatentry = catentryService.updateCatentry(catentry);
+		if (null == updatedCatentry) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		catentry.setId(cat.getId());
-		if (null != catentry.getPartnumber()) {
-			String url = catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase();
-			Catentry byUrlCategory = catentryService.findCatentryByURL(url);
-			if (null != byUrlCategory && !catentry.getPartnumber().equalsIgnoreCase(byUrlCategory.getPartnumber())) {
-				url = url + "-" + catentry.getPartnumber().toLowerCase();
-			}
-			catentry.setUrl(url);
-		}
-		return ResponseEntity.ok(catentryService.updateCatentry(catentry));
+		return ResponseEntity.ok(updatedCatentry);
 	}
 
 	@GetMapping(path = "/{url}")

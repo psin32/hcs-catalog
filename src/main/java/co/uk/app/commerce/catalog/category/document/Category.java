@@ -39,7 +39,7 @@ public class Category {
 
 	private String url;
 
-	private String lastupdate = new SimpleDateFormat("dd-MM-yy HH:mm:SS").format(new Date());
+	private String lastupdate = new SimpleDateFormat("dd-MM-yy HH:mm:ss.SS").format(new Date());
 
 	public String getLastupdate() {
 		return lastupdate;
@@ -136,9 +136,4 @@ public class Category {
 	public void setParentcategories(List<Association> parentcategories) {
 		this.parentcategories = parentcategories;
 	}
-
-	public Boolean getTopnav() {
-		return topnav;
-	}
-
 }
