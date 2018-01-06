@@ -1,6 +1,7 @@
 package co.uk.app.commerce.catalog.catentry.repository;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -18,4 +19,7 @@ public interface CatentryRepository extends MongoRepository<Catentry, String> {
 	Collection<Catentry> findByCategoryUrl(String url);
 
 	Catentry findByPartnumber(String partnumber);
+
+	@Query("{partnumber: {$in: ?0}, type : ?1, buyable : 1}")
+	Collection<Catentry> findByCatentryPartnumber(List<String> partnumber, String type);
 }

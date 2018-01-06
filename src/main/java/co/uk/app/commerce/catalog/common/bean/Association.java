@@ -10,6 +10,8 @@ public class Association {
 
 	private String type;
 
+	private Double sequence;
+
 	public String getName() {
 		return name;
 	}
@@ -40,6 +42,14 @@ public class Association {
 
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
+	}
+
+	public Double getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(Double sequence) {
+		this.sequence = sequence;
 	}
 
 }

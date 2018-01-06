@@ -12,6 +12,7 @@ import co.uk.app.commerce.catalog.category.service.CategoryService;
 import co.uk.app.commerce.catalog.catentry.document.Catentry;
 import co.uk.app.commerce.catalog.catentry.repository.CatentryRepository;
 import co.uk.app.commerce.catalog.common.bean.Association;
+import co.uk.app.commerce.catalog.common.bean.CatentryType;
 
 @Component
 public class CatentryServiceImpl implements CatentryService {
@@ -54,7 +55,7 @@ public class CatentryServiceImpl implements CatentryService {
 			catentry.setUrl(url);
 
 			List<Association> categories = getAssociationList(catentry);
-			catentry.setCategories(categories);
+			// catentry.setCategories(categories);
 
 			updatedCatentry = catentryRepository.save(catentry);
 		}
@@ -64,20 +65,21 @@ public class CatentryServiceImpl implements CatentryService {
 	private List<Association> getAssociationList(Catentry catentry) {
 		List<Association> categories = new ArrayList<>();
 
-		catentry.getCategories().stream().forEach(association -> {
-
-			String categoryIdentifier = association.getIdentifier();
-			Category category = categoryService.findCategoryByIdentifier(categoryIdentifier);
-
-			if (null != category) {
-				Association updatedAssociation = new Association();
-				updatedAssociation.setIdentifier(association.getIdentifier());
-				updatedAssociation.setName(category.getDescription().getName());
-				updatedAssociation.setUrl(category.getUrl());
-				updatedAssociation.setType(category.getClass().getName());
-				categories.add(updatedAssociation);
-			}
-		});
+		// catentry.getCategories().stream().forEach(association -> {
+		//
+		// String categoryIdentifier = association.getIdentifier();
+		// Category category =
+		// categoryService.findCategoryByIdentifier(categoryIdentifier);
+		//
+		// if (null != category) {
+		// Association updatedAssociation = new Association();
+		// updatedAssociation.setIdentifier(association.getIdentifier());
+		// updatedAssociation.setName(category.getDescription().getName());
+		// updatedAssociation.setUrl(category.getUrl());
+		// updatedAssociation.setType(category.getClass().getName());
+		// categories.add(updatedAssociation);
+		// }
+		// });
 		return categories;
 	}
 
@@ -93,7 +95,7 @@ public class CatentryServiceImpl implements CatentryService {
 			}
 			catentry.setUrl(url);
 			List<Association> categories = getAssociationList(catentry);
-			catentry.setCategories(categories);
+			// catentry.setCategories(categories);
 
 			savedCatentry = catentryRepository.insert(catentry);
 		}
@@ -106,8 +108,44 @@ public class CatentryServiceImpl implements CatentryService {
 	}
 
 	@Override
-	public Collection<Catentry> findCatentriesByCategoryUrl(String url) {
-		return catentryRepository.findByCategoryUrl(url);
+	public Collection<Catentry> findAllCatentriesForCategory(List<Association> products) {
+		List<String> partnumber = new ArrayList<>();
+		if (null != products) {
+			products.stream().forEach(product -> {
+				partnumber.add(product.getIdentifier());
+			});
+		}
+		return catentryRepository.findByCatentryPartnumber(partnumber, CatentryType.PRODUCTBEAN.toString());
+	}
+
+	@Override
+	public void updateUrl() {
+		List<Catentry> catentries = catentryRepository.findAll();
+		setUrlNull(catentries);
+		setUrl(catentries, CatentryType.PRODUCTBEAN);
+		setUrl(catentries, CatentryType.ITEMBEAN);
+	}
+
+	private void setUrl(List<Catentry> catentries, CatentryType type) {
+		catentries.stream().forEach(catentry -> {
+			if (catentry.getType().equals(type)) {
+				String url = catentry.getDescription().getName().replaceAll(" ", "-").toLowerCase();
+				Catentry byUrlCategory = findCatentryByURL(url);
+				if (null != byUrlCategory
+						&& !catentry.getPartnumber().equalsIgnoreCase(byUrlCategory.getPartnumber())) {
+					url = url + "__" + catentry.getPartnumber().toLowerCase();
+				}
+				catentry.setUrl(url);
+				catentryRepository.save(catentry);
+			}
+		});
+	}
+
+	private void setUrlNull(List<Catentry> catentries) {
+		catentries.stream().forEach(catentry -> {
+			catentry.setUrl(null);
+			catentryRepository.save(catentry);
+		});
 	}
 
 }

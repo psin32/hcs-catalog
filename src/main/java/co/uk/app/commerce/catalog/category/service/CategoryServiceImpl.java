@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import co.uk.app.commerce.catalog.category.document.Category;
 import co.uk.app.commerce.catalog.category.repository.CategoryRepository;
+import co.uk.app.commerce.catalog.common.bean.Association;
 
 @Component
 public class CategoryServiceImpl implements CategoryService {
@@ -17,7 +18,28 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Collection<Category> findAllCategories() {
+		Collection<Category> categories = categoryRepository.findAll();
+		categories.stream().forEach(category -> {
+			if (null != category.getDescription() && null != category.getDescription().getName()) {
+				category.setUrl(category.getDescription().getName().replaceAll(" ", "-").toLowerCase());
+			}
+
+			List<Association> subcategories = category.getChildcategories();
+			if (null != subcategories) {
+				subcategories.stream().forEach(subcategory -> {
+					if (null != subcategory.getIdentifier()) {
+						Category child = categoryRepository.findByIdentifier(subcategory.getIdentifier());
+						subcategory.setName(child.getDescription().getName());
+						subcategory.setUrl(child.getUrl());
+					}
+				});
+			}
+
+			categoryRepository.save(category);
+		});
+
 		return categoryRepository.findAll();
+
 	}
 
 	@Override

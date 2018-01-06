@@ -73,7 +73,7 @@ public class CategoryController {
 		if (null == category) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		Collection<Catentry> catentries = catentryService.findCatentriesByCategoryUrl(url);
+		Collection<Catentry> catentries = catentryService.findAllCatentriesForCategory(category.getProducts());
 		Collection<Category> subcategories = categoryService
 				.findSubCategoriesByParentIdentifier(category.getIdentifier());
 		CategoryResponseBean categoryResponseBean = new CategoryResponseBean();

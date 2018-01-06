@@ -50,4 +50,10 @@ public class CatentryController {
 		return ResponseEntity.ok(catentry);
 	}
 
+	@GetMapping
+	public ResponseEntity<?> updateUrls() {
+		catentryService.updateUrl();
+		return ResponseEntity.ok().build();
+	}
+
 }

@@ -47,8 +47,6 @@ public class Catentry {
 
 	private String enddate;
 
-	private List<Association> categories;
-
 	private List<Association> childitems;
 
 	private List<Attributes> attributes;
@@ -151,14 +149,6 @@ public class Catentry {
 
 	public void setEnddate(String enddate) {
 		this.enddate = enddate;
-	}
-
-	public List<Association> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Association> categories) {
-		this.categories = categories;
 	}
 
 	public List<Association> getChilditems() {

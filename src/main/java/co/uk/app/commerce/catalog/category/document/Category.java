@@ -35,7 +35,11 @@ public class Category {
 
 	private Boolean topnav;
 
-	private List<Association> parentcategories;
+	private Boolean topCategory;
+
+	private List<Association> childcategories;
+
+	private List<Association> products;
 
 	private String url;
 
@@ -113,10 +117,6 @@ public class Category {
 		this.sequence = sequence;
 	}
 
-	public Boolean isTopnav() {
-		return topnav;
-	}
-
 	public void setTopnav(Boolean topnav) {
 		this.topnav = topnav;
 	}
@@ -129,11 +129,32 @@ public class Category {
 		this.url = url;
 	}
 
-	public List<Association> getParentcategories() {
-		return parentcategories;
+	public Boolean getTopCategory() {
+		return topCategory;
 	}
 
-	public void setParentcategories(List<Association> parentcategories) {
-		this.parentcategories = parentcategories;
+	public void setTopCategory(Boolean topCategory) {
+		this.topCategory = topCategory;
 	}
+
+	public List<Association> getChildcategories() {
+		return childcategories;
+	}
+
+	public void setChildcategories(List<Association> childcategories) {
+		this.childcategories = childcategories;
+	}
+
+	public List<Association> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Association> products) {
+		this.products = products;
+	}
+
+	public Boolean getTopnav() {
+		return topnav;
+	}
+
 }
