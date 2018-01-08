@@ -10,6 +10,8 @@ public class Attributes {
 
 	private Double sequence;
 
+	private AttributeDisplayType displayType;
+
 	public String getName() {
 		return name;
 	}
@@ -40,6 +42,14 @@ public class Attributes {
 
 	public void setSequence(Double sequence) {
 		this.sequence = sequence;
+	}
+
+	public AttributeDisplayType getDisplayType() {
+		return displayType;
+	}
+
+	public void setDisplayType(AttributeDisplayType displayType) {
+		this.displayType = displayType;
 	}
 
 }

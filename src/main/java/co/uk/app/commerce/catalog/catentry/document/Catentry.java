@@ -190,5 +190,4 @@ public class Catentry {
 	public void setMainimage(String mainimage) {
 		this.mainimage = mainimage;
 	}
-
 }

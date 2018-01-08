@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.uk.app.commerce.catalog.catentry.document.Catentry;
 import co.uk.app.commerce.catalog.catentry.service.CatentryService;
+import co.uk.app.commerce.catalog.common.bean.CatentryResponseBean;
 
 @RestController
 @RequestMapping("/api/catentry")
@@ -43,11 +44,11 @@ public class CatentryController {
 
 	@GetMapping(path = "/{url}")
 	public ResponseEntity<?> getCatentryByURL(@PathVariable("url") String url) {
-		Catentry catentry = catentryService.findCatentryByURL(url);
-		if (null == catentry) {
+		CatentryResponseBean catentryResponseBean = catentryService.findProductData(url);
+		if (null == catentryResponseBean) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		return ResponseEntity.ok(catentry);
+		return ResponseEntity.ok(catentryResponseBean);
 	}
 
 	@GetMapping
