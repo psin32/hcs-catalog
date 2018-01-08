@@ -82,4 +82,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepository.findById(id);
 	}
 
+	@Override
+	public Category findCategoryByProductIdentifier(String partnumber) {
+		return categoryRepository.findCategoryByProductIdentifier(partnumber);
+	}
+
 }

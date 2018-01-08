@@ -20,4 +20,8 @@ public interface CategoryRepository extends MongoRepository<Category, String> {
 
 	@Query(value = "{parentcategories.identifier:?0}")
 	List<Category> findAllSubcategories(String identifier);
+	
+	@Query(value = "{products.identifier:?0}")
+	Category findCategoryByProductIdentifier(String partnumber);
+
 }

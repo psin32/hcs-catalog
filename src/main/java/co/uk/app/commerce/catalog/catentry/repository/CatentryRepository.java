@@ -22,4 +22,7 @@ public interface CatentryRepository extends MongoRepository<Catentry, String> {
 
 	@Query("{partnumber: {$in: ?0}, type : ?1, buyable : 1}")
 	Collection<Catentry> findByCatentryPartnumber(List<String> partnumber, String type);
+	
+	@Query(value = "{childitems.identifier:?0}")
+	Catentry findParentProduct(String partnumber);
 }

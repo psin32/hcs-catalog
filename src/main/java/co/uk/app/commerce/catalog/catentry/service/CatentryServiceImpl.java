@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import co.uk.app.commerce.catalog.category.document.Category;
 import co.uk.app.commerce.catalog.category.service.CategoryService;
 import co.uk.app.commerce.catalog.catentry.document.Catentry;
 import co.uk.app.commerce.catalog.catentry.repository.CatentryRepository;
@@ -48,7 +49,8 @@ public class CatentryServiceImpl implements CatentryService {
 			if (type.equals(CatentryType.PRODUCTBEAN)) {
 				catentryResponseBean = setProductResponse(catentry);
 			} else if (type.equals(CatentryType.ITEMBEAN)) {
-
+				Catentry parent = catentryRepository.findParentProduct(catentry.getPartnumber());
+				catentryResponseBean = setProductResponse(parent);
 			}
 		}
 		return catentryResponseBean;
@@ -83,17 +85,18 @@ public class CatentryServiceImpl implements CatentryService {
 			Catentry cat = catentryRepository.findByPartnumber(child.getIdentifier());
 			skus.add(cat);
 		});
+
+		Category category = categoryService.findCategoryByProductIdentifier(catentry.getPartnumber());
+		category.setProducts(null);
+
 		catentryResponseBean = new CatentryResponseBean();
 		catentryResponseBean.setProduct(catentry);
 		catentryResponseBean.setChild(skus);
+		catentryResponseBean.setCategory(category);
 		if (null != defaultItem) {
 			catentryResponseBean.setDefaultItem(defaultItem);
 		}
 		return catentryResponseBean;
-	}
-
-	private Catentry getProduct() {
-		return null;
 	}
 
 	@Override
@@ -117,33 +120,9 @@ public class CatentryServiceImpl implements CatentryService {
 			}
 			catentry.setUrl(url);
 
-			List<Association> categories = getAssociationList(catentry);
-			// catentry.setCategories(categories);
-
 			updatedCatentry = catentryRepository.save(catentry);
 		}
 		return updatedCatentry;
-	}
-
-	private List<Association> getAssociationList(Catentry catentry) {
-		List<Association> categories = new ArrayList<>();
-
-		// catentry.getCategories().stream().forEach(association -> {
-		//
-		// String categoryIdentifier = association.getIdentifier();
-		// Category category =
-		// categoryService.findCategoryByIdentifier(categoryIdentifier);
-		//
-		// if (null != category) {
-		// Association updatedAssociation = new Association();
-		// updatedAssociation.setIdentifier(association.getIdentifier());
-		// updatedAssociation.setName(category.getDescription().getName());
-		// updatedAssociation.setUrl(category.getUrl());
-		// updatedAssociation.setType(category.getClass().getName());
-		// categories.add(updatedAssociation);
-		// }
-		// });
-		return categories;
 	}
 
 	@Override
@@ -157,8 +136,6 @@ public class CatentryServiceImpl implements CatentryService {
 				url = url + "-" + catentry.getPartnumber().toLowerCase();
 			}
 			catentry.setUrl(url);
-			List<Association> categories = getAssociationList(catentry);
-			// catentry.setCategories(categories);
 
 			savedCatentry = catentryRepository.insert(catentry);
 		}

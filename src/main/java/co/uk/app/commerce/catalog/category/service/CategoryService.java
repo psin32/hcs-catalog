@@ -23,4 +23,6 @@ public interface CategoryService {
 	void deleteCategoryById(String id);
 	
 	Category findCategoryById(String id);
+	
+	Category findCategoryByProductIdentifier(String partnumber);
 }

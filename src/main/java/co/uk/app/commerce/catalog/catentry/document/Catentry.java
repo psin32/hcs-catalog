@@ -31,8 +31,6 @@ public class Catentry {
 
 	private List<Image> fullimage;
 
-	private String mainimage;
-
 	private CatentryType type;
 
 	private Integer published;
@@ -181,13 +179,5 @@ public class Catentry {
 
 	public void setOfferprice(List<OfferPrice> offerprice) {
 		this.offerprice = offerprice;
-	}
-
-	public String getMainimage() {
-		return mainimage;
-	}
-
-	public void setMainimage(String mainimage) {
-		this.mainimage = mainimage;
 	}
 }
