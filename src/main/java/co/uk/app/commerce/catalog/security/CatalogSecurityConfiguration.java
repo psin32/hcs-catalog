@@ -4,8 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 @Component
 @PropertySource("classpath:application.properties")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CatalogSecurityConfiguration {
 
 	@Value("${jwt.secret}")
@@ -28,32 +35,4 @@ public class CatalogSecurityConfiguration {
 
 	@Value("${jwt.audience}")
 	private String jwtAudience;
-
-	public String getJwtSecret() {
-		return jwtSecret;
-	}
-
-	public int getJwtExpirationTime() {
-		return jwtExpirationTime;
-	}
-
-	public String getJwtTokenPrefix() {
-		return jwtTokenPrefix;
-	}
-
-	public String getJwtHeader() {
-		return jwtHeader;
-	}
-
-	public String getJwtAudience() {
-		return jwtAudience;
-	}
-
-	public String getJwtCategoryUrlGetMethod() {
-		return jwtCategoryUrlGetMethod;
-	}
-
-	public String getJwtCatentryUrlGetMethod() {
-		return jwtCatentryUrlGetMethod;
-	}
 }

@@ -4,7 +4,15 @@ import java.util.Collection;
 
 import co.uk.app.commerce.catalog.category.document.Category;
 import co.uk.app.commerce.catalog.catentry.document.Catentry;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryResponseBean {
 
 	private Category category;
@@ -12,28 +20,4 @@ public class CategoryResponseBean {
 	private Collection<Category> subcategories;
 	
 	private Collection<Catentry> catentries;
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Collection<Category> getSubcategories() {
-		return subcategories;
-	}
-
-	public void setSubcategories(Collection<Category> subcategories) {
-		this.subcategories = subcategories;
-	}
-
-	public Collection<Catentry> getCatentries() {
-		return catentries;
-	}
-
-	public void setCatentries(Collection<Catentry> catentries) {
-		this.catentries = catentries;
-	}
 }

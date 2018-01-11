@@ -1,5 +1,14 @@
 package co.uk.app.commerce.catalog.common.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Attributes {
 
 	private String name;
@@ -11,45 +20,4 @@ public class Attributes {
 	private Double sequence;
 
 	private AttributeDisplayType displayType;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public AttributesType getType() {
-		return type;
-	}
-
-	public void setType(AttributesType type) {
-		this.type = type;
-	}
-
-	public Double getSequence() {
-		return sequence;
-	}
-
-	public void setSequence(Double sequence) {
-		this.sequence = sequence;
-	}
-
-	public AttributeDisplayType getDisplayType() {
-		return displayType;
-	}
-
-	public void setDisplayType(AttributeDisplayType displayType) {
-		this.displayType = displayType;
-	}
-
 }

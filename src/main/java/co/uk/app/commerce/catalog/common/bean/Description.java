@@ -1,5 +1,14 @@
 package co.uk.app.commerce.catalog.common.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Description {
 
 	private String name;
@@ -7,30 +16,4 @@ public class Description {
 	private String shortdescription;
 	
 	private String longdescription;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getShortdescription() {
-		return shortdescription;
-	}
-
-	public void setShortdescription(String shortdescription) {
-		this.shortdescription = shortdescription;
-	}
-
-	public String getLongdescription() {
-		return longdescription;
-	}
-
-	public void setLongdescription(String longdescription) {
-		this.longdescription = longdescription;
-	}
-	
-	
 }

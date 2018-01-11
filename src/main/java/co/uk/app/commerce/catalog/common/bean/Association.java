@@ -1,5 +1,14 @@
 package co.uk.app.commerce.catalog.common.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Association {
 
 	private String name;
@@ -11,45 +20,4 @@ public class Association {
 	private String type;
 
 	private Double sequence;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
-	}
-
-	public Double getSequence() {
-		return sequence;
-	}
-
-	public void setSequence(Double sequence) {
-		this.sequence = sequence;
-	}
-
 }
