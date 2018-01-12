@@ -18,9 +18,6 @@ public class CatalogSecurityConfiguration {
 	@Value("${jwt.secret}")
 	private String jwtSecret;
 
-	@Value("${jwt.expiration.time}")
-	private int jwtExpirationTime;
-
 	@Value("${jwt.token.prefix}")
 	private String jwtTokenPrefix;
 
@@ -32,7 +29,4 @@ public class CatalogSecurityConfiguration {
 
 	@Value("${jwt.get.catentry.url}")
 	private String jwtCatentryUrlGetMethod;
-
-	@Value("${jwt.audience}")
-	private String jwtAudience;
 }

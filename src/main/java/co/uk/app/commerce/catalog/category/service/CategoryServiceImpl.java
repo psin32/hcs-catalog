@@ -1,5 +1,6 @@
 package co.uk.app.commerce.catalog.category.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Collection<Category> findAllCategories() {
 		Collection<Category> categories = categoryRepository.findAll();
+
+		List<Category> categoryToBeSaved = new ArrayList<>();
+
 		categories.stream().forEach(category -> {
 			if (null != category.getDescription() && null != category.getDescription().getName()) {
 				category.setUrl(category.getDescription().getName().replaceAll(" ", "-").toLowerCase());
@@ -34,9 +38,11 @@ public class CategoryServiceImpl implements CategoryService {
 					}
 				});
 			}
-
-			categoryRepository.save(category);
+			categoryToBeSaved.add(category);
+			// categoryRepository.save(category);
 		});
+
+		categoryRepository.save(categoryToBeSaved);
 
 		return categoryRepository.findAll();
 

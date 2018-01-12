@@ -24,7 +24,7 @@ import co.uk.app.commerce.catalog.catentry.service.CatentryService;
 import co.uk.app.commerce.catalog.common.bean.CategoryResponseBean;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/category")
 public class CategoryController {
 
 	@Autowired

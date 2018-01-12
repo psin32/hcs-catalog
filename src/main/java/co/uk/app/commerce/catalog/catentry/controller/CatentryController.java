@@ -18,7 +18,7 @@ import co.uk.app.commerce.catalog.catentry.service.CatentryService;
 import co.uk.app.commerce.catalog.common.bean.CatentryResponseBean;
 
 @RestController
-@RequestMapping("/api/catentry")
+@RequestMapping("/catentry")
 public class CatentryController {
 
 	@Autowired

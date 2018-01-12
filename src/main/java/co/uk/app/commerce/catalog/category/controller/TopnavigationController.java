@@ -10,7 +10,7 @@ import co.uk.app.commerce.catalog.category.document.Category;
 import co.uk.app.commerce.catalog.category.service.CategoryService;
 
 @RestController
-@RequestMapping("/api/topnav")
+@RequestMapping("/topnav")
 public class TopnavigationController {
 
 	@Autowired
