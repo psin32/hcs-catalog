@@ -61,6 +61,7 @@ public class CatentryServiceImpl implements CatentryService {
 		List<Association> childItems = catentry.getChilditems();
 
 		String defaultItem = null;
+		List<Catentry> skus = new ArrayList<>();
 		if (null != childItems && childItems.size() > 0) {
 			defaultItem = catentry.getChilditems().get(0).getIdentifier();
 			childItems.sort(new Comparator<Association>() {
@@ -68,6 +69,10 @@ public class CatentryServiceImpl implements CatentryService {
 				public int compare(Association lhs, Association rhs) {
 					return lhs.getSequence() < rhs.getSequence() ? -1 : (lhs.getSequence() > rhs.getSequence()) ? 1 : 0;
 				}
+			});
+			childItems.stream().forEach(child -> {
+				Catentry cat = catentryRepository.findByPartnumber(child.getIdentifier());
+				skus.add(cat);
 			});
 		}
 
@@ -79,12 +84,6 @@ public class CatentryServiceImpl implements CatentryService {
 				}
 			});
 		}
-
-		List<Catentry> skus = new ArrayList<>();
-		childItems.stream().forEach(child -> {
-			Catentry cat = catentryRepository.findByPartnumber(child.getIdentifier());
-			skus.add(cat);
-		});
 
 		Category category = categoryService.findCategoryByProductIdentifier(catentry.getPartnumber());
 		category.setProducts(null);
