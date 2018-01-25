@@ -25,4 +25,6 @@ public interface CategoryService {
 	Category findCategoryById(String id);
 	
 	Category findCategoryByProductIdentifier(String partnumber);
+	
+	Collection<Category> findTopCategories();
 }

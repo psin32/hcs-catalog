@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import co.uk.app.commerce.catalog.constant.CatalogConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
@@ -60,10 +61,10 @@ public class CatalogJWTAuthorizationFilter extends BasicAuthenticationFilter {
 			securityConfiguration = webApplicationContext.getBean(CatalogSecurityConfiguration.class);
 		}
 		String token = null;
-		
+
 		String authHeader = request.getHeader(securityConfiguration.getJwtHeader());
 		if (authHeader != null && authHeader.startsWith(securityConfiguration.getJwtTokenPrefix())) {
-			token =  authHeader.replace(securityConfiguration.getJwtTokenPrefix(), "");
+			token = authHeader.replace(securityConfiguration.getJwtTokenPrefix(), "");
 		}
 		if (token != null) {
 
@@ -75,11 +76,13 @@ public class CatalogJWTAuthorizationFilter extends BasicAuthenticationFilter {
 			} catch (Exception e) {
 				claims = null;
 			}
-			
+
 			if (null != claims) {
 				String user = claims.getSubject();
 
 				if (user != null) {
+					request.setAttribute(CatalogConstants.REQUEST_HEADER_ROLE,
+							claims.get(CatalogConstants.JWT_CLAIM_ROLE));
 					return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
 				}
 			}

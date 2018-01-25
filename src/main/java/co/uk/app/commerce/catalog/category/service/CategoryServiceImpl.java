@@ -93,4 +93,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepository.findCategoryByProductIdentifier(partnumber);
 	}
 
+	@Override
+	public Collection<Category> findTopCategories() {
+		return categoryRepository.findAll();
+	}
+
 }
